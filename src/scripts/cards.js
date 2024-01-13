@@ -5,8 +5,9 @@ export const initialCards = [
       altText: "Город Екатеринбург. На картинке изображен въезд в город с табличкой 'Город Бесов'",
     },
     {
+      // https://avatars.dzeninfra.ru/get-zen_doc/230865/pub_5dcfc6e9042363115e30817c_5dd12c5ec7891f51f5fba7b2/orig
       name: "Нео-Токио из «Акира»",
-      link: "https://avatars.dzeninfra.ru/get-zen_doc/230865/pub_5dcfc6e9042363115e30817c_5dd12c5ec7891f51f5fba7b2/orig",
+      link: "https://sutochno.ru/doc/images/galleries/180/luchshie2.jpg",
       altText: "Город Нео-Токио из аниме «Акира»",
     },
     {

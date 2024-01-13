@@ -1,11 +1,12 @@
 // теперь картинки можно импортировать,
 // вебпак добавит в переменные правильные пути
-import {initialCards} from './scripts/cards.js'
 import addIcon from './images/add-icon.svg';
 import avatar from './images/avatar.jpg';
 import card1 from './images/card_1.jpg';
 import logo from './images/logo.svg';
 import './styles/index.css';
+import initialCards  from '../src/blocks/card/initialCards';
+import {openPopup, closePopup, openPopupImg} from './components/popupCard'
 
 const whoIsTheGoat = [
   // меняем исходные пути на переменные
@@ -15,34 +16,33 @@ const whoIsTheGoat = [
   { name: 'logo', link: logo },
 ];
 
-// // @todo: Темплейт карточки
-const cardTemplate = document.querySelector('#card-template').content;
 
-// // @todo: DOM узлы
-const places = document.querySelector('.places__list');
+const profileAddCaed = document.querySelector('.profile__add-button');
+const popupForm = document.querySelector('.popup_type_new-card');
+const popupCloseCard = popupForm.querySelector('.popup__close');
 
-// @todo: Функция создания карточки
-function createCard (titleValue, imageValue, alt, removeCard) {
-    const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-    
-    cardElement.querySelector('.card__image').src = imageValue;
-    cardElement.querySelector('.card__image').alt = alt;
+const profilEeditButton = document.querySelector ('.profile__edit-button')
+const popuProfiledit = document.querySelector ('.popup_type_edit')
+const popupCloseProfiledit = popuProfiledit.querySelector('.popup__close');
 
-    cardElement.querySelector('.card__title').textContent = titleValue;
+const cardElement = document.querySelector('.card')
+const popupImage = document.querySelector('.popup_type_image')
+const imge = cardElement.querySelector('.card__image')
+const title = cardElement.querySelector('.card__title')
 
-    const deleteButton = cardElement.querySelector('.card__delete-button');
-    deleteButton.addEventListener('click', function(){removeCard(cardElement)});
-    
-    return cardElement;
-};
 
-// @todo: Функция удаления карточки
-function deleteCard (cardEl) {
-    cardEl.remove();
-};
+imge.addEventListener('click', () => openPopupImg(popupImage, imge.src, imge.alt, title.textContent))
 
-// @todo: Вывести карточки на страницу
-initialCards.forEach((item) => {
-    places.append(createCard(item.name, item.link, item.altText, deleteCard));
-});
+console.log(imge.src)
+
+
+
+profileAddCaed.addEventListener('click', () => openPopup(popupForm));
+popupCloseCard.addEventListener('click',() => closePopup(popupForm));
+
+profilEeditButton.addEventListener('click', () => openPopup(popuProfiledit));
+popupCloseProfiledit.addEventListener('click',() => closePopup(popuProfiledit));
+
+
+
 
