@@ -1,4 +1,4 @@
-const initialCards = [
+export const initialCards = [
     {
       name: "Екатеринбург",
       link: "https://vmrucdn.servicecdn.ru/photo/vecherka/2019/06/doc75tvju274memsdccjv2_800_480.jpg",

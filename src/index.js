@@ -1,3 +1,20 @@
+// теперь картинки можно импортировать,
+// вебпак добавит в переменные правильные пути
+import {initialCards} from './scripts/cards.js'
+import addIcon from './images/add-icon.svg';
+import avatar from './images/avatar.jpg';
+import card1 from './images/card_1.jpg';
+import logo from './images/logo.svg';
+import './styles/index.css';
+
+const whoIsTheGoat = [
+  // меняем исходные пути на переменные
+  { name: 'add', link: addIcon },
+  { name: 'avatar', link: avatar },
+  { name: 'card1', link: card1 },
+  { name: 'logo', link: logo },
+];
+
 // // @todo: Темплейт карточки
 const cardTemplate = document.querySelector('#card-template').content;
 
