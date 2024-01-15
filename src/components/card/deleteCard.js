@@ -1,4 +1,4 @@
-import {initialCards} from './cards'
+import {initialCards} from './cardsData'
 
 export default function deleteCard (cardEl) {
     const a = cardEl.querySelector('.card__image').src;

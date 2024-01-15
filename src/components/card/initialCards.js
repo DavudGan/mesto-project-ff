@@ -1,6 +1,6 @@
 import createCard from './createCard';
 import deleteCard from './deleteCard';
-import {initialCards} from './cards';
+import {initialCards} from './cardsData';
 import like from './like';
 
 const places = document.querySelector('.places__list');

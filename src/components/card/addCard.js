@@ -1,4 +1,4 @@
-import {initialCards} from './cards';
+import {initialCards} from './cardsData';
 import initialCard from '../card/initialCards'
 import {closePopup} from '../popup/popupOpenAndClose'
 
