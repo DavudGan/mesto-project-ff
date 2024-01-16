@@ -1,8 +1,9 @@
-import {openPopupImg} from '../popup/popupOpenAndClose';
+import {openPopupImg} from './index';
 
 const cardTemplate = document.querySelector('#card-template').content;
+const popupImage = document.querySelector('.popup_type_image');
 
-export default function createCard (titleValue, imageValue, alt, removeCard, likeCard) {
+function createCard (titleValue, imageValue, alt) {
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     
     cardElement.querySelector('.card__image').src = imageValue;
@@ -10,18 +11,30 @@ export default function createCard (titleValue, imageValue, alt, removeCard, lik
     cardElement.querySelector('.card__title').textContent = titleValue;
 
     const deleteButton = cardElement.querySelector('.card__delete-button');
-    deleteButton.addEventListener('click', () => {removeCard(cardElement)});
+    deleteButton.addEventListener('click', () => {deleteCard(cardElement)});
 
     const likeButton = cardElement.querySelector('.card__like-button');
-    likeButton.addEventListener('click', likeCard(cardElement));
+    likeButton.addEventListener('click', like(cardElement));
 
     //открытm popup для картинок
-    const popupImage = document.querySelector('.popup_type_image');
     const imge = cardElement.querySelector('.card__image');
     const title = cardElement.querySelector('.card__title');
     
     imge.addEventListener('click', () => openPopupImg(popupImage, imge.src, imge.alt, title.textContent));
 
-
     return cardElement
 };
+
+function like(cardElement) {
+    cardElement.addEventListener('click', function (evt) {
+        if(evt.target.classList.contains('card__like-button')) {
+            evt.target.classList.toggle('card__like-button_is-active');
+        } 
+    });
+}
+
+function deleteCard (cardEl) {
+    cardEl.remove();
+};
+
+export {createCard, deleteCard, like}

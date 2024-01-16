@@ -8,18 +8,15 @@ function openPopup  (popupElement)  {
 };
 
 function openPopupImg (popupElement, src, alt, textContent) {
-    popupElement.classList.add('popup_is-opened');
     popupElement.querySelector('.popup__image').src = src;
     popupElement.querySelector('.popup__image').alt = alt;
     popupElement.querySelector('.popup__caption').textContent = textContent;
-    popupElement.classList.add('popup_is-opened');
-
+    openPopup(popupElement)
+    
     popupElement.querySelector('.popup__image').focus();
 
     closeOutOfPopup(popupElement);
 }
-
-
 //Проверка клика вне попапа
 function closeOutOfPopup (popupElement) {
     popupElement.addEventListener('click', function (evt) {
@@ -27,16 +24,13 @@ function closeOutOfPopup (popupElement) {
             closePopup(popupElement);
         }
     });
-    
 }
 
 function closeKeyPopup (evt,popupElement) {
-
     if (evt.key === 'Escape') {
         closePopup(popupElement);
+        popupElement.removeEventListener('keydown', closeKeyPopup);
     }
-
 }
-
 
 export {openPopup, closePopup, openPopupImg, closeKeyPopup}
