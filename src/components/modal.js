@@ -14,7 +14,7 @@ function closeOutOfPopup (evt) {
     
     if (popupContent) {
         closePopup(popupContent);
-    } else console.log('dsa')
+    }
 }
 
 function closeKeyPopup (e) {
