@@ -112,7 +112,7 @@ function openPopupImg (popupElement, src, alt, textContent) {
   popupElement.querySelector('.popup__image').src = src;
   popupElement.querySelector('.popup__image').alt = alt;
   popupElement.querySelector('.popup__caption').textContent = textContent;
-  
+
   openPopup(popupElement)
   
   popupElement.querySelector('.popup__image').focus();
@@ -120,5 +120,3 @@ function openPopupImg (popupElement, src, alt, textContent) {
 
 //Загрузка карточек при первом входе на сайт
 initial();
-
-export {openPopupImg}
