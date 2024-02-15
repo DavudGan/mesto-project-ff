@@ -24,7 +24,7 @@ function createCard(
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", () => {
-    deleteCard(cardId);
+    deleteCard(cardId, cardElement);
   });
 
   if (cardUserId === userId) {
@@ -48,7 +48,7 @@ function createCard(
     like(evt, cardId, cardElement);
   });
 
-  //открытm popup для картинок
+  //Открытый popup для картинок
   const imge = cardElement.querySelector(".card__image");
   const title = cardElement.querySelector(".card__title");
 
@@ -59,22 +59,30 @@ function createCard(
   return cardElement;
 }
 
-async function like(evt, cardId, cardElement) {
+function like(evt, cardId, cardElement) {
   if (evt.target.classList.contains("card__like-button")) {
     if (
       cardElement
         .querySelector(".card__like-button")
         .classList.contains("card__like-button_is-active")
     ) {
-      await removeLike(cardId).then((res) => {
-        cardElement.querySelector(".card__like-sum").textContent =
-          res.likes.length;
-      });
+      removeLike(cardId)
+        .then((res) => {
+          cardElement.querySelector(".card__like-sum").textContent =
+            res.likes.length;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
-      await addLike(cardId).then((res) => {
-        cardElement.querySelector(".card__like-sum").textContent =
-          res.likes.length;
-      });
+      addLike(cardId)
+        .then((res) => {
+          cardElement.querySelector(".card__like-sum").textContent =
+            res.likes.length;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
     cardElement
       .querySelector(".card__like-button")
@@ -82,9 +90,14 @@ async function like(evt, cardId, cardElement) {
   }
 }
 
-async function deleteCard(cardId) {
-  await removeCard(cardId);
-  updatesListCards();
+function deleteCard(cardId, cardEl) {
+  removeCard(cardId)
+    .then(() => {
+      cardEl.remove();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export { createCard, like, deleteCard };

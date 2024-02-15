@@ -70,11 +70,18 @@ const toggleButtonState = (inputList, buttonElement) => {
 };
 
 function clearValidation(profileForm, validationConfig) {
-  const inputList = validationConfig.inputSelector;
+  console.log(profileForm, validationConfig);
+  const inputList = Array.from(
+    profileForm.querySelectorAll(validationConfig.inputSelector)
+  );
   const errorList = profileForm.querySelectorAll(
     validationConfig.errorSelector
   );
-  const buttonElement = validationConfig.submitButtonSelector;
+  console.log(inputList);
+  console.log(profileForm.querySelector(validationConfig.submitButtonSelector));
+  const buttonElement = profileForm.querySelector(
+    validationConfig.submitButtonSelector
+  );
 
   inputList.forEach((inputElement) => {
     inputElement.classList.remove(validationConfig.inputErrorClass);
@@ -85,7 +92,14 @@ function clearValidation(profileForm, validationConfig) {
     errorElement.classList.remove(validationConfig.errorActiveClass);
   });
 
-  buttonElement.disabled = validationConfig.buttonElementDisabled;
+  if (
+    profileForm.classList.contains("new-avatar") ||
+    profileForm.classList.contains("new-place")
+  ) {
+    buttonElement.disabled = true;
+  } else {
+    buttonElement.disabled = false;
+  }
 }
 
 export { enableValidation, clearValidation };

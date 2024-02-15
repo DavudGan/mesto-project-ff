@@ -1,15 +1,6 @@
-import {
-  clearFormValidationProfil,
-  clearFormValidationAddCard,
-  clearFormValidationAvatar,
-} from "./index";
-
 function openPopup(popupElement) {
   popupElement.classList.add("popup_is-opened");
   document.addEventListener("keydown", closeKeyPopup);
-  clearFormValidationProfil();
-  clearFormValidationAddCard();
-  clearFormValidationAvatar();
 }
 
 function closePopup(popupElement) {

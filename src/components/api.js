@@ -6,56 +6,42 @@ const config = {
   },
 };
 
-export const getProfilData = () => {
+function proceedResponse(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Что-то пошло не так: ${res.status}`);
+}
+
+export const getUserInfo = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => {
+    return proceedResponse(res);
+  });
 };
 
-export const editingProfilAvatar = (avatar) => {
+export const updateUserAvatar = (avatar) => {
   return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
       avatar: avatar,
     }),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => {
+    return proceedResponse(res);
+  });
 };
 
 export const getInitialCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => {
+    return proceedResponse(res);
+  });
 };
 
-export const editingProfile = (name, about) => {
+export const updateUserInfo = (name, about) => {
   return fetch(`${config.baseUrl}/users/me`, {
     method: "PATCH",
     headers: config.headers,
@@ -63,16 +49,9 @@ export const editingProfile = (name, about) => {
       name: name,
       about: about,
     }),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => {
+    return proceedResponse(res);
+  });
 };
 
 export const saveNewCard = (name, link) => {
@@ -83,62 +62,34 @@ export const saveNewCard = (name, link) => {
       name: name,
       link: link,
     }),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => {
+    return proceedResponse(res);
+  });
 };
 
 export const removeCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => {
+    return proceedResponse(res);
+  });
 };
 
 export const addLike = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "PUT",
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => {
+    return proceedResponse(res);
+  });
 };
 
 export const removeLike = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => {
+    return proceedResponse(res);
+  });
 };
