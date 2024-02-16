@@ -77,12 +77,6 @@ function clearValidation(profileForm, validationConfig) {
   const errorList = profileForm.querySelectorAll(
     validationConfig.errorSelector
   );
-  console.log(inputList);
-  console.log(profileForm.querySelector(validationConfig.submitButtonSelector));
-  const buttonElement = profileForm.querySelector(
-    validationConfig.submitButtonSelector
-  );
-
   inputList.forEach((inputElement) => {
     inputElement.classList.remove(validationConfig.inputErrorClass);
   });
@@ -91,15 +85,6 @@ function clearValidation(profileForm, validationConfig) {
     errorElement.textContent = "";
     errorElement.classList.remove(validationConfig.errorActiveClass);
   });
-
-  if (
-    profileForm.classList.contains("new-avatar") ||
-    profileForm.classList.contains("new-place")
-  ) {
-    buttonElement.disabled = true;
-  } else {
-    buttonElement.disabled = false;
-  }
 }
 
 export { enableValidation, clearValidation };

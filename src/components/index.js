@@ -28,15 +28,18 @@ const whoIsTheGoat = [
 
 const promises = [getUserInfo(), getInitialCards()];
 
+let USER_ID = "";
+
 Promise.all(promises)
   .then(([userData, cardsData]) => {
-    renderInitialCards(userData, cardsData);
+    USER_ID = userData._id;
+    renderInitialCards(cardsData);
+    renderInitialProfile(userData);
   })
   .catch((error) => {
     // Обработка ошибок
     console.error("Error fetching data:", error);
   });
-let userId = "";
 
 const validationConfig = {
   inputSelector: ".popup__input",
@@ -50,6 +53,7 @@ const validationConfig = {
 const profileAddImage = document.querySelector(".profile__image");
 const popupFormAvatar = document.querySelector(".popup_type_new-avatar");
 const popupCloseAvatarButton = popupFormAvatar.querySelector(".popup__close");
+const popupAvatarButton = popupFormAvatar.querySelector(".popup__button");
 
 const formEditAvatar = popupFormAvatar.querySelector(".popup__form");
 
@@ -60,6 +64,7 @@ const urlImgAvatar = editFormElementAvatar.querySelector("[name='link']");
 const profileAddCard = document.querySelector(".profile__add-button");
 const popupFormCard = document.querySelector(".popup_type_new-card");
 const popupCloseCardButton = popupFormCard.querySelector(".popup__close");
+const popupCardButton = popupFormCard.querySelector(".popup__button");
 
 const popupContainers = document.querySelectorAll(".popup");
 
@@ -71,6 +76,8 @@ const popupEditProfile = document.querySelector(".profile__edit-button");
 const popuProfiledit = document.querySelector(".popup_type_edit");
 const popupCloseProfileditButton =
   popuProfiledit.querySelector(".popup__close");
+const popupProfileditButton =
+  popuProfiledit.querySelector(".popup__button");
 
 const formEditProfile = popuProfiledit.querySelector(".popup__form");
 
@@ -101,7 +108,10 @@ popupCloseImgeButton.addEventListener("click", () => closePopup(popupImage));
 
 //открыт и закрыт попап профиля
 popupEditProfile.addEventListener("click", () => {
-  openPopup(popuProfiledit), fillInInputs(), clearFormValidationProfil();
+  openPopup(popuProfiledit);
+  fillInInputs();
+  disableButton(popupProfileditButton)
+  clearFormValidationProfil()
 });
 popupCloseProfileditButton.addEventListener("click", () =>
   closePopup(popuProfiledit)
@@ -111,7 +121,9 @@ formEditProfile.addEventListener("submit", submitEditProfileForm);
 
 //открыт и закрыт попап Аватара
 profileAddImage.addEventListener("click", () => {
-  openPopup(popupFormAvatar), clearFormValidationAvatar();
+  openPopup(popupFormAvatar);
+  clearFormInput(editFormElementAvatar)
+  clearFormValidationAvatar()
 });
 popupCloseAvatarButton.addEventListener("click", () =>
   closePopup(popupFormAvatar)
@@ -121,7 +133,9 @@ editFormElementAvatar.addEventListener("submit", addNewAvatar);
 
 //открыт и закрыт попап карточек
 profileAddCard.addEventListener("click", () => {
-  openPopup(popupFormCard), clearFormValidationAddCard();
+  openPopup(popupFormCard)
+  clearFormInput(addFormCard)
+  clearFormValidationAddCard()
 });
 popupCloseCardButton.addEventListener("click", () => closePopup(popupFormCard));
 
@@ -157,21 +171,14 @@ function submitEditProfileForm(evt) {
     );
 }
 
-function renderInitialCards(userData, cardsData) {
-  userId = userData._id;
-  console.log(userId, userData._id);
-  //Данные с API для профиля
-  profileDescription.textContent = userData.about;
-  profilTitle.textContent = userData.name;
-  profileAddImage.style.backgroundImage = `url(${userData.avatar})`;
-
+function renderInitialCards(cardsData) {
   //Данные с API для карточек
   cardsData.forEach((item) => {
     places.append(
       createCard(
         item.name,
         item.owner._id,
-        userData._id,
+        USER_ID,
         item._id,
         item.link,
         item.altText,
@@ -184,12 +191,19 @@ function renderInitialCards(userData, cardsData) {
   });
 }
 
+function renderInitialProfile(userData) {
+  //Данные с API для профиля
+  profileDescription.textContent = userData.about;
+  profilTitle.textContent = userData.name;
+  profileAddImage.style.backgroundImage = `url(${userData.avatar})`;
+}
+
 function updatesListCards(res) {
   places.insertBefore(
     createCard(
       res.name,
       res.owner._id,
-      userId,
+      USER_ID,
       res._id,
       res.link,
       res.altText,
@@ -239,7 +253,9 @@ function addNewCard(evt) {
     );
 }
 
-function openPopupImg(popupElement, src, alt, textContent) {
+function openPopupImg(src, alt, textContent) {
+  const popupElement = document.querySelector(".popup_type_image");
+
   popupElement.querySelector(".popup__image").src = src;
   popupElement.querySelector(".popup__image").alt = alt;
   popupElement.querySelector(".popup__caption").textContent = textContent;
@@ -259,6 +275,10 @@ allForm.forEach((evt) => {
   });
 });
 
+function clearFormInput(form) {
+  form.reset()
+}
+
 function clearFormValidationProfil() {
   clearValidation(editFormElement, validationConfig);
 }
@@ -271,9 +291,8 @@ function clearFormValidationAvatar() {
   clearValidation(formEditAvatar, validationConfig);
 }
 
-export {
-  clearFormValidationProfil,
-  clearFormValidationAddCard,
-  clearFormValidationAvatar,
-  updatesListCards,
-};
+
+function disableButton(buttonElement) {
+  buttonElement.disabled = false;
+}
+

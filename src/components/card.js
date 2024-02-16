@@ -1,5 +1,4 @@
 import { removeCard, addLike, removeLike } from "./api";
-import { updatesListCards } from "./index";
 
 const cardTemplate = document.querySelector("#card-template").content;
 const popupImage = document.querySelector(".popup_type_image");
@@ -53,7 +52,7 @@ function createCard(
   const title = cardElement.querySelector(".card__title");
 
   imge.addEventListener("click", () =>
-    openPopupImg(popupImage, imge.src, imge.alt, title.textContent)
+    openPopupImg(imge.src, imge.alt, title.textContent)
   );
 
   return cardElement;
@@ -79,14 +78,14 @@ function like(evt, cardId, cardElement) {
         .then((res) => {
           cardElement.querySelector(".card__like-sum").textContent =
             res.likes.length;
+          cardElement
+            .querySelector(".card__like-button")
+            .classList.toggle("card__like-button_is-active");
         })
         .catch((err) => {
           console.log(err);
         });
     }
-    cardElement
-      .querySelector(".card__like-button")
-      .classList.toggle("card__like-button_is-active");
   }
 }
 
